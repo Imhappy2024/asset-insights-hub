@@ -1,37 +1,24 @@
-const integrations = [
-  { name: "AppFolio", color: "#0072CE", abbr: "AF" },
-  { name: "Yardi Breeze", color: "#E31837", abbr: "Y" },
-  { name: "Yardi Voyager", color: "#C00F25", abbr: "Y" },
-  { name: "Buildium", color: "#0D5EAF", abbr: "Bu" },
-  { name: "Rent Manager", color: "#1F3A5F", abbr: "RM" },
-  { name: "RealPage", color: "#005BAC", abbr: "RP" },
-  { name: "Entrata", color: "#FF5500", abbr: "En" },
-];
-
 const IntegrationMarquee = () => {
-  const cards = [...integrations, ...integrations];
-
   return (
-    <div className="py-10 border-t border-b border-border bg-foreground/[0.015] overflow-hidden">
-      <div className="text-center text-[11px] font-bold tracking-[0.1em] uppercase text-fe-muted-dark mb-6">
-        Connects to your existing PM software
+    <div className="py-10 border-t border-b border-border bg-foreground/[0.015]">
+      <div className="text-center text-[11px] font-bold tracking-[0.1em] uppercase text-fe-muted-dark mb-2">
+        Currently integrated with AppFolio · Open API architecture supports additional platforms
       </div>
-      <div className="flex w-max" style={{ animation: "marquee 30s linear infinite" }}>
-        {cards.map((int, i) => (
+      <div className="flex justify-center mt-5 mb-4">
+        <div className="flex items-center gap-2.5 px-6 py-3 bg-foreground/[0.04] border border-foreground/[0.08] rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.3),0_1px_0_rgba(255,255,255,0.04)_inset] cursor-default">
           <div
-            key={i}
-            className="flex items-center gap-2.5 px-5 py-2.5 mx-2 bg-foreground/[0.04] border border-foreground/[0.08] rounded-xl whitespace-nowrap shadow-[0_2px_12px_rgba(0,0,0,0.3),0_1px_0_rgba(255,255,255,0.04)_inset] hover:bg-foreground/[0.07] hover:-translate-y-0.5 transition-all cursor-default"
+            className="w-[34px] h-[34px] rounded-lg flex items-center justify-center text-[12px] font-extrabold text-primary-foreground shrink-0"
+            style={{ background: "#0072CE" }}
           >
-            <div
-              className="w-[30px] h-[30px] rounded-lg flex items-center justify-center text-[11px] font-extrabold text-primary-foreground shrink-0"
-              style={{ background: int.color }}
-            >
-              {int.abbr}
-            </div>
-            <span className="text-[13px] font-bold text-foreground">{int.name}</span>
+            AF
           </div>
-        ))}
+          <span className="text-[15px] font-bold text-foreground">AppFolio</span>
+          <span className="ml-2 px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold tracking-wider uppercase">Live</span>
+        </div>
       </div>
+      <p className="text-center text-[12px] text-fe-muted-dark mt-4">
+        Using Yardi, Buildium, or another platform? <a href="#capture" className="text-primary hover:underline font-semibold">Reach out</a> — integrations are built together.
+      </p>
     </div>
   );
 };

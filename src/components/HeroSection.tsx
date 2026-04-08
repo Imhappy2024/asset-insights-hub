@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import HeroDashboardMockup from "@/components/HeroDashboardMockup";
 
 const HeroSection = () => {
   return (
@@ -75,6 +76,11 @@ const HeroSection = () => {
             See How It Works
           </a>
         </motion.div>
+      </div>
+
+      {/* Animated device mockup */}
+      <div className="w-full max-w-[1100px] mx-auto relative z-10 pb-12">
+        <HeroDashboardMockup />
       </div>
     </section>
   );

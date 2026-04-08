@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
+const CALENDLY_URL = "YOUR_CALENDLY_LINK_HERE";
+
 const CaptureForm = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -16,6 +18,7 @@ const CaptureForm = () => {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
     setSubmitted(true);
+    window.open(CALENDLY_URL, "_blank");
   };
 
   return (
@@ -133,7 +136,7 @@ const CaptureForm = () => {
             >
               Request Early Access →
             </button>
-            <p className="text-xs text-fe-muted-dark mt-3 text-center">🔒 No payment required · We'll reach out within 24 hours</p>
+            <p className="text-xs text-fe-muted-dark mt-3 text-center">🔒 No payment required · You'll be redirected to schedule a call</p>
           </motion.form>
         ) : (
           <motion.div
@@ -146,7 +149,7 @@ const CaptureForm = () => {
             </div>
             <h3 className="text-[22px] font-extrabold text-foreground mb-3">You're on the list!</h3>
             <p className="text-sm text-fe-muted-dark max-w-[400px] mx-auto leading-relaxed">
-              Thanks, {formData.name}! We'll reach out to <strong className="text-foreground">{formData.email}</strong> within 24 hours to get you set up.
+              Thanks, {formData.name}! We've opened our scheduling page in a new tab — book a quick call and we'll get you set up.
             </p>
           </motion.div>
         )}

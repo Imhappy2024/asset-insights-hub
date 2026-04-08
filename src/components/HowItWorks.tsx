@@ -3,18 +3,18 @@ import { motion } from "framer-motion";
 const steps = [
   {
     num: "01",
-    title: "Connect Your PM Software",
-    desc: "Select your platform and authenticate. FolioExcel handles the connection — no API keys, no dev work. Works across multiple platforms simultaneously.",
+    title: "Connect Your AppFolio Account",
+    desc: "Authenticate your AppFolio account and we handle the connection — no API keys, no developer work required.",
   },
   {
     num: "02",
     title: "Your Data Flows Instantly",
-    desc: "Within minutes, your full portfolio populates — income statements, rent rolls, occupancy, delinquency, cash flow, and unit-level data — all organized for asset managers.",
+    desc: "Within minutes, your full portfolio populates — income statements, rent rolls, occupancy, delinquency, cash flow, and unit-level data — all organized and ready.",
   },
   {
     num: "03",
-    title: "Dashboards & Excel on Demand",
-    desc: "View every KPI on screen, drill into any property or unit, and export any view to Excel whenever you need it. No formulas. No manual work.",
+    title: "View Dashboards & Export to Excel",
+    desc: "Every KPI is on your dashboard the moment you log in. Drill into any property or unit, and export any view to Excel with one click.",
   },
 ];
 
@@ -27,7 +27,7 @@ const HowItWorks = () => (
       </div>
       <h2 className="text-[clamp(28px,3.8vw,50px)] font-extrabold leading-[1.08] tracking-[-0.028em] text-fe-text-light mb-4">
         Up and running in<br />
-        <em className="font-serif italic font-normal text-primary">under 10 minutes</em>
+        <em className="font-serif italic font-normal text-primary">under 30 minutes</em>
       </h2>
       <p className="text-[17px] text-fe-muted-light max-w-[520px] leading-relaxed mb-14">
         No complex onboarding. No IT team. Just connect and your data starts flowing.

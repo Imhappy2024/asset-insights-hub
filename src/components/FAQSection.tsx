@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const faqs = [
   {
     q: "What PM software does FolioExcel integrate with?",
-    a: "FolioExcel is capable of integrating with major property management platforms including AppFolio, Yardi Breeze, Yardi Voyager, Buildium, Rent Manager, RealPage, Entrata, and more. If you use a platform not listed, contact us — we're adding new integrations regularly.",
+    a: "FolioExcel is currently integrated with AppFolio. Because we're built on open API architecture, we can connect with virtually any property management platform — but each integration requires development work specific to that system. If you're on Yardi, Buildium, or another platform, reach out and we'll assess the integration together.",
   },
   {
     q: "What reports and KPIs are available?",

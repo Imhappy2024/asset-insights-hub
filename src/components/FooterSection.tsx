@@ -23,9 +23,11 @@ const FooterSection = () => (
         <div>
           <div className="text-[11px] font-bold text-fe-muted-dark tracking-widest uppercase mb-4">Integrations</div>
           <div className="flex flex-col gap-2.5">
-            {["AppFolio", "Yardi", "Buildium", "Rent Manager", "RealPage", "Entrata"].map((int) => (
-              <span key={int} className="text-[13px] text-fe-muted-dark">{int}</span>
-            ))}
+            <span className="text-[13px] text-fe-muted-dark flex items-center gap-2">
+              AppFolio
+              <span className="px-1.5 py-0.5 rounded-full bg-primary/10 text-primary text-[9px] font-bold tracking-wider uppercase">Live</span>
+            </span>
+            <span className="text-[13px] text-fe-muted-dark">More via open API</span>
           </div>
         </div>
         <div>
