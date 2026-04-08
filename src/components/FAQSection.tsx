@@ -43,12 +43,12 @@ const FAQSection = () => {
     <section id="faq" className="py-24 md:py-28 px-5 md:px-12 bg-fe-light text-fe-text-light">
       <div className="max-w-[760px] mx-auto">
         <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-primary mb-5 justify-center">
+          <div className="inline-flex items-center gap-2 text-[11px] font-machine font-bold tracking-[0.1em] uppercase text-primary mb-5 justify-center">
             <span className="block w-[22px] h-0.5 bg-primary rounded" />
             FAQ
             <span className="block w-[22px] h-0.5 bg-primary rounded" />
           </div>
-          <h2 className="text-[clamp(28px,3.8vw,50px)] font-extrabold leading-[1.08] tracking-[-0.028em] text-fe-text-light mb-4">
+          <h2 className="font-display text-[clamp(28px,3.8vw,50px)] font-bold leading-[1.08] tracking-[-0.02em] text-fe-text-light mb-4">
             Frequently asked <em className="font-serif italic font-normal text-primary">questions</em>
           </h2>
         </div>
@@ -67,7 +67,7 @@ const FAQSection = () => {
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
                 className="w-full flex items-center justify-between px-6 py-4 text-left"
               >
-                <span className="text-[15px] font-bold text-fe-text-light pr-4">{faq.q}</span>
+                <span className="font-machine text-[15px] font-bold text-fe-text-light pr-4">{faq.q}</span>
                 <span className={`text-primary text-xl font-light shrink-0 transition-transform ${openIndex === i ? "rotate-45" : ""}`}>
                   +
                 </span>

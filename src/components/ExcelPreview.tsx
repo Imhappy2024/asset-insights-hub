@@ -119,12 +119,12 @@ const ExcelPreview = () => {
     >
       <div className="max-w-[1100px] mx-auto">
         <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-primary mb-4">
+          <div className="inline-flex items-center gap-2 text-[11px] font-machine font-bold tracking-[0.1em] uppercase text-primary mb-4">
             <span className="block w-[22px] h-0.5 bg-primary rounded" />
             Excel Export Preview
             <span className="block w-[22px] h-0.5 bg-primary rounded" />
           </div>
-          <h2 className="text-[clamp(28px,3.8vw,50px)] font-extrabold leading-[1.08] tracking-[-0.028em] text-foreground mb-4">
+          <h2 className="font-display text-[clamp(28px,3.8vw,50px)] font-bold leading-[1.08] tracking-[-0.02em] text-foreground mb-4">
             The spreadsheet you <em className="font-serif italic font-normal text-primary">actually want</em>
           </h2>
           <p className="text-[17px] text-fe-muted-dark max-w-[580px] mx-auto leading-relaxed">

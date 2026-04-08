@@ -16,6 +16,8 @@ export default {
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
         serif: ['"Instrument Serif"', 'serif'],
+        display: ['"Clash Display"', 'sans-serif'],
+        machine: ['"Neue Machina"', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

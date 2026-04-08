@@ -20,7 +20,7 @@ const StatsBar = () => (
           className="text-center py-10 px-6 border-b sm:border-b-0 sm:border-r border-[hsl(var(--fe-border-light))] last:border-r-0 relative group"
         >
           <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="text-[42px] font-extrabold leading-none text-fe-text-light">
+          <div className="font-machine text-[42px] font-extrabold leading-none text-fe-text-light">
             {s.num.includes("x") || s.num.includes("+") || s.num.includes("∞") ? (
               <>
                 {s.num.replace(/[x+∞]/g, "")}

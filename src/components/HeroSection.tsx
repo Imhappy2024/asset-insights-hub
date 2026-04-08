@@ -32,7 +32,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="text-[clamp(40px,5.6vw,74px)] font-extrabold leading-[1.06] tracking-[-0.032em] text-foreground mb-2"
+          className="font-display text-[clamp(40px,5.6vw,74px)] font-bold leading-[1.06] tracking-[-0.02em] text-foreground mb-2"
         >
           One Log In.<br />
           Every <em className="font-serif italic font-normal bg-gradient-to-r from-primary to-[#0ACDFF] bg-clip-text text-transparent">KPI.</em><br />

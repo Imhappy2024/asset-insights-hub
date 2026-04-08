@@ -1,7 +1,7 @@
 const IntegrationMarquee = () => {
   return (
     <div className="py-10 border-t border-b border-border bg-foreground/[0.015]">
-      <div className="text-center text-[11px] font-bold tracking-[0.1em] uppercase text-fe-muted-dark mb-2">
+      <div className="text-center text-[11px] font-machine font-bold tracking-[0.1em] uppercase text-fe-muted-dark mb-2">
         Currently integrated with AppFolio · Open API architecture supports additional platforms
       </div>
       <div className="flex justify-center mt-5 mb-4">

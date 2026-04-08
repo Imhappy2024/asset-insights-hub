@@ -30,12 +30,12 @@ const CaptureForm = () => {
       <div className="absolute w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,hsl(213_100%_52%/0.08),transparent_65%)] -bottom-[80px] -left-[80px] blur-[80px] pointer-events-none" />
 
       <div className="max-w-[680px] mx-auto text-center relative z-10">
-        <div className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-primary mb-5 justify-center">
+        <div className="inline-flex items-center gap-2 text-[11px] font-machine font-bold tracking-[0.1em] uppercase text-primary mb-5 justify-center">
           <span className="block w-[22px] h-0.5 bg-primary rounded" />
           Get Early Access
           <span className="block w-[22px] h-0.5 bg-primary rounded" />
         </div>
-        <h2 className="text-[clamp(28px,3.8vw,50px)] font-extrabold leading-[1.08] tracking-[-0.028em] text-foreground mb-4">
+        <h2 className="font-display text-[clamp(28px,3.8vw,50px)] font-bold leading-[1.08] tracking-[-0.02em] text-foreground mb-4">
           Stop building reports.<br />
           <em className="font-serif italic font-normal text-primary">Start making decisions.</em>
         </h2>
@@ -147,7 +147,7 @@ const CaptureForm = () => {
             <div className="w-[72px] h-[72px] rounded-full bg-gradient-to-br from-primary/20 to-accent/15 border-2 border-primary/30 flex items-center justify-center mx-auto mb-5 text-3xl shadow-[0_8px_32px_hsl(162_100%_39%/0.2)]">
               ✓
             </div>
-            <h3 className="text-[22px] font-extrabold text-foreground mb-3">You're on the list!</h3>
+            <h3 className="font-display text-[22px] font-bold text-foreground mb-3">You're on the list!</h3>
             <p className="text-sm text-fe-muted-dark max-w-[400px] mx-auto leading-relaxed">
               Thanks, {formData.name}! We've opened our scheduling page in a new tab — book a quick call and we'll get you set up.
             </p>

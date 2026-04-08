@@ -39,11 +39,11 @@ const features = [
 const FeaturesSection = () => (
   <section id="features" className="py-24 md:py-28 px-5 md:px-12 bg-fe-light text-fe-text-light">
     <div className="max-w-[1100px] mx-auto">
-      <div className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-primary mb-5">
+      <div className="inline-flex items-center gap-2 text-[11px] font-machine font-bold tracking-[0.1em] uppercase text-primary mb-5">
         <span className="block w-[22px] h-0.5 bg-primary rounded" />
         Platform
       </div>
-      <h2 className="text-[clamp(28px,3.8vw,50px)] font-extrabold leading-[1.08] tracking-[-0.028em] text-fe-text-light mb-4">
+      <h2 className="font-display text-[clamp(28px,3.8vw,50px)] font-bold leading-[1.08] tracking-[-0.02em] text-fe-text-light mb-4">
         Everything an asset manager<br />
         <em className="font-serif italic font-normal text-primary">actually needs</em>
       </h2>
@@ -65,7 +65,7 @@ const FeaturesSection = () => (
             <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-5 text-[19px] shadow-[0_4px_12px_rgba(0,0,0,0.1)] ${f.iconClass}`}>
               {f.icon}
             </div>
-            <h3 className="text-base font-bold text-fe-text-light mb-2">{f.title}</h3>
+            <h3 className="font-machine text-base font-bold text-fe-text-light mb-2">{f.title}</h3>
             <p className="text-[13.5px] text-fe-muted-light leading-relaxed">{f.desc}</p>
             <ul className="mt-4 flex flex-col gap-2">
               {f.bullets.map((b) => (

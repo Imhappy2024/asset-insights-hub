@@ -13,11 +13,11 @@ const reports = [
 const ReportsSection = () => (
   <section id="reports" className="py-24 md:py-28 px-5 md:px-12 bg-card text-foreground">
     <div className="max-w-[1100px] mx-auto">
-      <div className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.1em] uppercase text-primary mb-5">
+      <div className="inline-flex items-center gap-2 text-[11px] font-machine font-bold tracking-[0.1em] uppercase text-primary mb-5">
         <span className="block w-[22px] h-0.5 bg-primary rounded" />
         Reports
       </div>
-      <h2 className="text-[clamp(28px,3.8vw,50px)] font-extrabold leading-[1.08] tracking-[-0.028em] mb-4">
+      <h2 className="font-display text-[clamp(28px,3.8vw,50px)] font-bold leading-[1.08] tracking-[-0.02em] mb-4">
         Every report you need,<br />
         <em className="font-serif italic font-normal text-primary">automatically aggregated</em>
       </h2>
