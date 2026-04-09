@@ -17,9 +17,7 @@ const VideoSection = () => {
     const tryPlay = () => {
       video.muted = false;
       video.play().catch(() => {
-        // Browser blocked unmuted — fall back to muted
-        video.muted = true;
-        video.play().catch(() => {});
+        // Browser blocked unmuted autoplay — user must click play manually
       });
     };
 
