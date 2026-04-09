@@ -91,7 +91,7 @@ const CaptureForm = () => {
                 <select
                   value={formData.portfolioSize}
                   onChange={(e) => setFormData({ ...formData, portfolioSize: e.target.value })}
-                  className="px-3.5 py-2.5 bg-foreground/5 border border-foreground/10 rounded-lg text-foreground text-sm outline-none focus:border-primary/40 appearance-none cursor-pointer shadow-[0_2px_6px_rgba(0,0,0,0.2)]"
+                className="px-3.5 py-2.5 bg-[hsl(var(--fe-dark2))] border border-foreground/10 rounded-lg text-foreground text-sm outline-none focus:border-primary/40 appearance-none cursor-pointer shadow-[0_2px_6px_rgba(0,0,0,0.2)] [&>option]:bg-[hsl(230,30%,12%)] [&>option]:text-foreground [&>option]:py-2"
                 >
                   <option value="">Select range</option>
                   <option>Under 100 units</option>
@@ -107,7 +107,7 @@ const CaptureForm = () => {
               <select
                 value={formData.pmSoftware}
                 onChange={(e) => setFormData({ ...formData, pmSoftware: e.target.value })}
-                className="px-3.5 py-2.5 bg-foreground/5 border border-foreground/10 rounded-lg text-foreground text-sm outline-none focus:border-primary/40 appearance-none cursor-pointer shadow-[0_2px_6px_rgba(0,0,0,0.2)]"
+                className="px-3.5 py-2.5 bg-[hsl(var(--fe-dark2))] border border-foreground/10 rounded-lg text-foreground text-sm outline-none focus:border-primary/40 appearance-none cursor-pointer shadow-[0_2px_6px_rgba(0,0,0,0.2)] [&>option]:bg-[hsl(230,30%,12%)] [&>option]:text-foreground [&>option]:py-2"
               >
                 <option value="">Select platform</option>
                 <option>AppFolio</option>

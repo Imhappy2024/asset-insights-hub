@@ -15,10 +15,9 @@ const VideoSection = () => {
     if (!video) return;
 
     const tryPlay = () => {
-      // Try unmuted first
       video.muted = false;
       video.play().catch(() => {
-        // Browser blocked unmuted — fall back to muted (user can unmute via controls)
+        // Browser blocked unmuted — fall back to muted
         video.muted = true;
         video.play().catch(() => {});
       });
@@ -30,7 +29,9 @@ const VideoSection = () => {
       }
     };
     const onPlay = () => {
-      userPausedRef.current = false;
+      if (!observerPausingRef.current) {
+        userPausedRef.current = false;
+      }
     };
 
     video.addEventListener("pause", onPause);
@@ -39,21 +40,23 @@ const VideoSection = () => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          // Only autoplay the very first time
           if (!hasAutoplayedRef.current) {
             hasAutoplayedRef.current = true;
-            // Wait until enough data is ready before playing
             if (video.readyState >= 3) {
               tryPlay();
             } else {
               video.addEventListener("canplay", tryPlay, { once: true });
             }
-          } else if (!userPausedRef.current) {
-            video.play().catch(() => {});
           }
+          // Do NOT resume when scrolling back — user must manually play
         } else {
+          // Pause when scrolled out of view
           if (!video.paused) {
             observerPausingRef.current = true;
             video.pause();
+            // Mark as user-paused so it won't auto-resume
+            userPausedRef.current = true;
             setTimeout(() => { observerPausingRef.current = false; }, 50);
           }
         }
