@@ -24,7 +24,11 @@ const Navbar = () => {
           ))}
         </ul>
         <div className="hidden md:flex gap-3 items-center">
-          <button className="px-4 py-2 rounded-lg text-fe-muted-dark font-semibold text-sm hover:text-foreground transition-colors">
+          {/* UPDATED: Desktop Sign In Button */}
+          <button
+            onClick={() => (window.location.href = "https://app.folioexcel.com/login")}
+            className="px-4 py-2 rounded-lg text-fe-muted-dark font-semibold text-sm hover:text-foreground transition-colors"
+          >
             Sign In
           </button>
           <button
@@ -35,10 +39,19 @@ const Navbar = () => {
           </button>
         </div>
         {/* Mobile hamburger */}
-        <button className="flex md:hidden flex-col gap-[5px] p-1 bg-transparent border-none" onClick={() => setMenuOpen(!menuOpen)}>
-          <span className={`block w-[22px] h-0.5 bg-foreground rounded transition-all ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`} />
-          <span className={`block w-[22px] h-0.5 bg-foreground rounded transition-all ${menuOpen ? "opacity-0 scale-x-0" : ""}`} />
-          <span className={`block w-[22px] h-0.5 bg-foreground rounded transition-all ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`} />
+        <button
+          className="flex md:hidden flex-col gap-[5px] p-1 bg-transparent border-none"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span
+            className={`block w-[22px] h-0.5 bg-foreground rounded transition-all ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`}
+          />
+          <span
+            className={`block w-[22px] h-0.5 bg-foreground rounded transition-all ${menuOpen ? "opacity-0 scale-x-0" : ""}`}
+          />
+          <span
+            className={`block w-[22px] h-0.5 bg-foreground rounded transition-all ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`}
+          />
         </button>
         {/* Mobile menu */}
         {menuOpen && (
@@ -53,11 +66,21 @@ const Navbar = () => {
                 {item}
               </a>
             ))}
-            <button className="mt-3 py-3.5 text-[15px] font-semibold text-fe-muted-dark hover:text-foreground transition-colors text-left" onClick={() => setMenuOpen(false)}>
+            {/* UPDATED: Mobile Sign In Button */}
+            <button
+              className="mt-3 py-3.5 text-[15px] font-semibold text-fe-muted-dark hover:text-foreground transition-colors text-left"
+              onClick={() => {
+                setMenuOpen(false);
+                window.location.href = "https://app.folioexcel.com/login";
+              }}
+            >
               Sign In
             </button>
             <button
-              onClick={() => { setMenuOpen(false); setTrialOpen(true); }}
+              onClick={() => {
+                setMenuOpen(false);
+                setTrialOpen(true);
+              }}
               className="mt-2 bg-primary text-primary-foreground py-3.5 px-5 rounded-lg text-center font-bold shadow-[0_4px_16px_hsl(162_100%_39%/0.3)]"
             >
               Get Your Free Trial
