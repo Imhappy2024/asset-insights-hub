@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- White circle -->
+  <circle cx="16" cy="16" r="15.5" fill="white"/>
+  <!-- Top horizontal bar (black) -->
+  <rect x="8.5" y="7" width="15" height="4" fill="#111827" rx="0.5"/>
+  <!-- Middle horizontal bar (black) -->
+  <rect x="8.5" y="14.5" width="11" height="3.5" fill="#111827" rx="0.5"/>
+  <!-- Vertical stem (green — drawn on top to show through junctions) -->
+  <rect x="8.5" y="7" width="4" height="18" fill="#00c896" rx="0.5"/>
+</svg>
