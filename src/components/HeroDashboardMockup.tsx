@@ -475,7 +475,7 @@ const PhoneScreen = () => {
         height: "100%", display: "flex", flexDirection: "column",
       }}>
         {/* Status bar */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "42px 20px 6px", flexShrink: 0 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "32px 14px 4px", flexShrink: 0 }}>
           <div style={{ fontSize: "11px", fontWeight: 600, color: "#e8eaee", letterSpacing: "0.02em" }}>9:41</div>
           <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
             <svg width="12" height="9" viewBox="0 0 12 9" fill="none"><rect x="0" y="6" width="2" height="3" rx=".5" fill="#e8eaee"/><rect x="3" y="4" width="2" height="5" rx=".5" fill="#e8eaee"/><rect x="6" y="2" width="2" height="7" rx=".5" fill="#e8eaee"/><rect x="9" y="0" width="2" height="9" rx=".5" fill="#e8eaee" opacity=".35"/></svg>
@@ -659,49 +659,97 @@ const HeroDashboardMockup = () => {
         transition={{ delay: 0.6, duration: 0.9, ease: "easeOut" }}
         style={{ maxWidth: "900px", width: "100%", position: "relative", zIndex: 10 }}
       >
-        {/* MacBook outer body */}
+        {/* ── Lid (aluminum back + screen) ── */}
         <div style={{
           width: "100%",
-          background: "#d1d1d6",
-          borderRadius: "16px 16px 4px 4px",
-          border: "2px solid #b1b1b6",
-          boxShadow: "0 30px 60px rgba(0,0,0,0.3)",
+          background: "linear-gradient(175deg, #e0e0e5 0%, #c8c8ce 60%, #b8b8be 100%)",
+          borderRadius: "14px 14px 0 0",
+          border: "1.5px solid #a8a8ae",
+          borderBottom: "none",
+          boxShadow: "0 -2px 0 rgba(255,255,255,0.6) inset, 0 40px 80px rgba(0,0,0,0.5)",
+          padding: "12px 12px 0",
           position: "relative",
-          paddingBottom: "0",
         }}>
-          {/* Screen area */}
+          {/* Camera dot */}
           <div style={{
-            width: "calc(100% - 24px)",
-            aspectRatio: "744/540",
-            background: "#000",
-            margin: "12px auto 0",
-            borderRadius: "10px",
-            position: "relative",
-            overflow: "hidden",
-          }}>
-            {/* Notch */}
-            <div style={{
-              width: "120px", height: "24px",
-              background: "#000", borderRadius: "0 0 10px 10px",
-              position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)",
-              zIndex: 20,
-            }} />
-            {/* Dashboard content */}
-            <LaptopDashboard />
-          </div>
+            width: "6px", height: "6px", borderRadius: "50%",
+            background: "#5a5a5a", margin: "0 auto 8px",
+            boxShadow: "0 0 0 1px rgba(0,0,0,0.3)",
+          }} />
 
-          {/* Hinge bar */}
+          {/* Screen glass — dark bezel around display */}
           <div style={{
-            width: "100.5%", height: "24px", background: "#c1c1c6",
-            position: "relative", left: "-0.25%",
-            borderRadius: "0 0 12px 12px",
-            boxShadow: "inset 0 -2px 5px rgba(0,0,0,0.2)",
-            marginTop: "0",
+            background: "#1a1a1a",
+            borderRadius: "6px 6px 0 0",
+            padding: "6px",
+            boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.8)",
+          }}>
+            {/* Display */}
+            <div style={{
+              borderRadius: "3px",
+              overflow: "hidden",
+              position: "relative",
+              aspectRatio: "16/10",
+              background: "#0d0e11",
+            }}>
+              {/* Browser chrome */}
+              <div style={{
+                display: "flex", alignItems: "center", gap: "6px",
+                padding: "5px 10px",
+                background: "#1c1d28",
+                borderBottom: "1px solid rgba(255,255,255,0.06)",
+                flexShrink: 0,
+              }}>
+                <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#ff5f57", flexShrink: 0 }} />
+                <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#febc2e", flexShrink: 0 }} />
+                <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#28c840", flexShrink: 0 }} />
+                <div style={{
+                  flex: 1, margin: "0 12px",
+                  background: "#0d0e11", borderRadius: "4px",
+                  fontSize: "6px", color: "rgba(255,255,255,0.25)",
+                  padding: "2px 8px", textAlign: "center",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                }}>
+                  app.folioexcel.com/dashboard
+                </div>
+              </div>
+              {/* Dashboard content */}
+              <div style={{ position: "relative", height: "calc(100% - 28px)", overflow: "hidden" }}>
+                <LaptopDashboard />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Hinge ── */}
+        <div style={{
+          height: "5px",
+          background: "linear-gradient(180deg, #a0a0a6 0%, #b8b8be 100%)",
+          borderLeft: "1.5px solid #a8a8ae",
+          borderRight: "1.5px solid #a8a8ae",
+        }} />
+
+        {/* ── Base / keyboard deck ── */}
+        <div style={{
+          background: "linear-gradient(180deg, #cacace 0%, #b8b8be 100%)",
+          borderRadius: "0 0 10px 10px",
+          border: "1.5px solid #a8a8ae",
+          borderTop: "none",
+          height: "28px",
+          boxShadow: "0 12px 40px rgba(0,0,0,0.45)",
+          display: "flex", justifyContent: "center", alignItems: "center",
+        }}>
+          {/* Trackpad */}
+          <div style={{
+            width: "100px", height: "16px", borderRadius: "3px",
+            background: "linear-gradient(180deg, #c0c0c6 0%, #b0b0b6 100%)",
+            border: "1px solid #a0a0a6",
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.3)",
           }} />
         </div>
 
         {/* Glow under laptop */}
-        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[55%] h-[20px] bg-primary/10 blur-2xl rounded-full pointer-events-none" />
+        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[60%] h-[24px] bg-primary/15 blur-2xl rounded-full pointer-events-none" />
       </motion.div>
 
       {/* ── iPhone 16 Pro ── */}
@@ -717,8 +765,8 @@ const HeroDashboardMockup = () => {
         }}
         style={{
           position: "absolute",
-          bottom: "-60px",
-          right: "calc(50% - 560px)",
+          bottom: "-20px",
+          right: "calc(50% - 510px)",
           zIndex: 20,
           rotateX,
           rotateY,
@@ -727,42 +775,42 @@ const HeroDashboardMockup = () => {
         }}
         className="hidden lg:block"
       >
-        {/* iPhone 16 Pro outer body — exact spec: 292×610, 50px radius */}
+        {/* iPhone 16 Pro outer body — scaled to 210×438 (72% of spec) */}
         <div style={{
-          width: "292px",
-          height: "610px",
+          width: "210px",
+          height: "438px",
           background: "#f2f2f7",
-          borderRadius: "50px",
-          border: "3px solid #d1d1d6",
-          boxShadow: "0 20px 40px rgba(0,0,0,0.18)",
-          padding: "4px",
+          borderRadius: "36px",
+          border: "2.5px solid #d1d1d6",
+          boxShadow: "0 20px 50px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.8)",
+          padding: "3px",
           position: "relative",
         }}>
-          {/* Hardware buttons — exact spec positions */}
+          {/* Hardware buttons — scaled positions */}
           {/* Action button */}
-          <div style={{ background: "#d1d1d6", position: "absolute", borderRadius: "2px", width: "3px", height: "20px", left: "-6px", top: "110px" }} />
+          <div style={{ background: "#c8c8ce", position: "absolute", borderRadius: "2px", width: "3px", height: "14px", left: "-5px", top: "79px" }} />
           {/* Vol up */}
-          <div style={{ background: "#d1d1d6", position: "absolute", borderRadius: "2px", width: "3px", height: "45px", left: "-6px", top: "150px" }} />
+          <div style={{ background: "#c8c8ce", position: "absolute", borderRadius: "2px", width: "3px", height: "32px", left: "-5px", top: "108px" }} />
           {/* Vol down */}
-          <div style={{ background: "#d1d1d6", position: "absolute", borderRadius: "2px", width: "3px", height: "45px", left: "-6px", top: "205px" }} />
+          <div style={{ background: "#c8c8ce", position: "absolute", borderRadius: "2px", width: "3px", height: "32px", left: "-5px", top: "148px" }} />
           {/* Power */}
-          <div style={{ background: "#d1d1d6", position: "absolute", borderRadius: "2px", width: "3px", height: "60px", right: "-6px", top: "165px" }} />
+          <div style={{ background: "#c8c8ce", position: "absolute", borderRadius: "2px", width: "3px", height: "43px", right: "-5px", top: "119px" }} />
           {/* Camera control */}
-          <div style={{ background: "#d1d1d6", position: "absolute", borderRadius: "4px", width: "3px", height: "40px", right: "-6px", top: "350px" }} />
+          <div style={{ background: "#c8c8ce", position: "absolute", borderRadius: "3px", width: "3px", height: "29px", right: "-5px", top: "252px" }} />
 
           {/* Screen */}
           <div style={{
             width: "100%", height: "100%",
             background: "#000",
-            borderRadius: "44px",
+            borderRadius: "32px",
             position: "relative",
             overflow: "hidden",
           }}>
             {/* Dynamic Island */}
             <div style={{
-              width: "78px", height: "24px",
-              background: "#000", borderRadius: "20px",
-              position: "absolute", top: "10px", left: "50%",
+              width: "56px", height: "17px",
+              background: "#000", borderRadius: "14px",
+              position: "absolute", top: "8px", left: "50%",
               transform: "translateX(-50%)", zIndex: 10,
             }} />
             <PhoneScreen />
