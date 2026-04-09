@@ -16,9 +16,6 @@ const IntegrationMarquee = () => {
           <span className="ml-2 px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold tracking-wider uppercase">Live</span>
         </div>
       </div>
-      <p className="text-center text-[12px] text-fe-muted-dark mt-4">
-        Using Yardi, Buildium, or another platform? <a href="#capture" className="text-primary hover:underline font-semibold">Reach out</a> — integrations are built together.
-      </p>
     </div>
   );
 };
