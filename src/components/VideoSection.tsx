@@ -15,9 +15,19 @@ const VideoSection = () => {
     if (!video) return;
 
     const tryPlay = () => {
+      // Try unmuted first; if browser blocks, fall back to muted autoplay
       video.muted = false;
       video.play().catch(() => {
-        // Browser blocked unmuted autoplay — user must click play manually
+        video.muted = true;
+        video.play().catch(() => {});
+        // Unmute on first user interaction
+        const unmute = () => {
+          video.muted = false;
+          document.removeEventListener("click", unmute);
+          document.removeEventListener("keydown", unmute);
+        };
+        document.addEventListener("click", unmute, { once: true });
+        document.addEventListener("keydown", unmute, { once: true });
       });
     };
 
