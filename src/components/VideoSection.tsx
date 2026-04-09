@@ -89,7 +89,6 @@ const VideoSection = () => {
             controls
             playsInline
             preload="metadata"
-            muted
             className="w-full block bg-black"
             style={{ maxHeight: "560px", objectFit: "cover" }}
           >
