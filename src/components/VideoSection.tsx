@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
-// GitHub LFS direct CDN URL — works on all deployment platforms
-const VIDEO_SRC = "https://media.githubusercontent.com/media/Imhappy2024/asset-insights-hub/main/public/0409.mp4";
+const VIDEO_SRC = "/0409.mp4";
 
 const VideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
