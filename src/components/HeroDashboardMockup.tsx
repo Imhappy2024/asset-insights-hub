@@ -340,189 +340,291 @@ const LaptopDashboard = () => {
 };
 
 /* ─────────────────────────────────────────────
-   IPHONE SCREEN CONTENT (3-phase loop)
+   IPHONE SCREEN CONTENT — scroll → menu → loop
 ───────────────────────────────────────────── */
 const PhoneScreen = () => {
-  // 0 = dashboard, 1 = menu open, 2 = menu selected (transition back)
-  const [phase, setPhase] = useState(0);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [menuVisible, setMenuVisible] = useState(false);
+  const [contentOpacity, setContentOpacity] = useState(1);
+  const [tapVisible, setTapVisible] = useState(false);
 
   useEffect(() => {
-    const phases = [
-      { phase: 0, duration: 3500 },
-      { phase: 1, duration: 2000 },
-      { phase: 2, duration: 800 },
-    ];
-    let step = 0;
-    let timer: ReturnType<typeof setTimeout>;
+    let rafId: number;
+    let phaseTimer: ReturnType<typeof setTimeout>;
+    let scrollStart = 0;
+    const SCROLL_DURATION = 9000;  // ms to scroll through content
+    const MAX_SCROLL = 280;        // px to scroll down
+    let running = true;
 
-    const advance = () => {
-      step = (step + 1) % phases.length;
-      const next = phases[step];
-      setPhase(next.phase);
-      setMenuVisible(next.phase === 1);
-      timer = setTimeout(advance, next.duration);
+    const easeInOut = (t: number) =>
+      t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+    const doScroll = (ts: number) => {
+      if (!running) return;
+      if (!scrollStart) scrollStart = ts;
+      const elapsed = ts - scrollStart;
+      const progress = Math.min(elapsed / SCROLL_DURATION, 1);
+      const pos = easeInOut(progress) * MAX_SCROLL;
+      if (contentRef.current) contentRef.current.style.transform = `translateY(-${pos}px)`;
+
+      if (progress < 1) {
+        rafId = requestAnimationFrame(doScroll);
+      } else {
+        // Scroll done — show tap ripple on hamburger
+        setTapVisible(true);
+        phaseTimer = setTimeout(() => {
+          setTapVisible(false);
+          setMenuVisible(true);
+
+          // Menu visible for 2.2s
+          phaseTimer = setTimeout(() => {
+            setMenuVisible(false);
+            // Fade out content, reset scroll, fade back in
+            phaseTimer = setTimeout(() => {
+              setContentOpacity(0);
+              phaseTimer = setTimeout(() => {
+                if (contentRef.current) contentRef.current.style.transform = "translateY(0)";
+                scrollStart = 0;
+                setContentOpacity(1);
+                // Restart scroll after brief pause
+                phaseTimer = setTimeout(() => {
+                  rafId = requestAnimationFrame(doScroll);
+                }, 400);
+              }, 350);
+            }, 500);
+          }, 2200);
+        }, 600);
+      }
     };
 
-    timer = setTimeout(advance, phases[0].duration);
-    return () => clearTimeout(timer);
+    // Initial delay before first scroll
+    phaseTimer = setTimeout(() => {
+      rafId = requestAnimationFrame(doScroll);
+    }, 800);
+
+    return () => {
+      running = false;
+      cancelAnimationFrame(rafId);
+      clearTimeout(phaseTimer);
+    };
   }, []);
 
-  const mcStyle: React.CSSProperties = { background: "#363840", borderRadius: "8px", padding: "8px 10px", overflow: "hidden" };
-  const mcLabelStyle: React.CSSProperties = { fontSize: "8px", color: "#565869", marginBottom: "4px", lineHeight: 1.3 };
-  const mcValStyle = (color?: string): React.CSSProperties => ({
-    fontSize: "18px", fontWeight: 700, color: color || "#e8eaee", lineHeight: 1, letterSpacing: "-0.03em",
+  const mc = (color?: string): React.CSSProperties => ({
+    background: "#363840", borderRadius: "10px", padding: "10px 12px", overflow: "hidden",
+    color: color || "#e8eaee",
   });
+  const mcLabel: React.CSSProperties = { fontSize: "9px", color: "#565869", marginBottom: "5px", lineHeight: 1.3 };
+  const mcVal = (color?: string): React.CSSProperties => ({
+    fontSize: "22px", fontWeight: 700, color: color || "#e8eaee", lineHeight: 1, letterSpacing: "-0.03em",
+  });
+  const secHdr: React.CSSProperties = { fontSize: "12px", fontWeight: 600, color: "#c5c8d8", margin: "6px 0 3px", letterSpacing: "-0.01em" };
 
   return (
     <div style={{
       width: "100%", height: "100%", background: "#252629", overflow: "hidden", position: "relative",
       fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif",
     }}>
-      {/* Slide-in menu overlay */}
+      {/* ── Slide-in menu overlay ── */}
       <div style={{
         position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
         background: "#1c1d22", zIndex: 20,
         transform: menuVisible ? "translateX(0)" : "translateX(-100%)",
-        transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1)",
+        transition: "transform 0.45s cubic-bezier(0.4,0,0.2,1)",
         display: "flex", flexDirection: "column",
-        padding: "40px 0 0",
       }}>
-        <div style={{ padding: "10px 16px 8px", borderBottom: "1px solid #2c2d35" }}>
-          <div style={{ fontSize: "13px", fontWeight: 700, color: "#e8eaee", letterSpacing: "-0.02em" }}>Menu</div>
+        {/* Status row inside menu */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "48px 20px 8px" }}>
+          <div style={{ fontSize: "11px", fontWeight: 600, color: "#e8eaee" }}>9:41</div>
+          <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+            <svg width="12" height="9" viewBox="0 0 12 9" fill="none"><rect x="0" y="6" width="2" height="3" rx=".5" fill="#e8eaee"/><rect x="3" y="4" width="2" height="5" rx=".5" fill="#e8eaee"/><rect x="6" y="2" width="2" height="7" rx=".5" fill="#e8eaee"/><rect x="9" y="0" width="2" height="9" rx=".5" fill="#e8eaee" opacity=".35"/></svg>
+            <svg width="17" height="9" viewBox="0 0 17 9" fill="none"><rect x=".5" y=".5" width="13" height="8" rx="2" stroke="#e8eaee" strokeOpacity=".35"/><rect x="1.5" y="1.5" width="10" height="6" rx="1.2" fill="#22c55e"/><path d="M14.5 3v3" stroke="#e8eaee" strokeOpacity=".4" strokeWidth="1.5" strokeLinecap="round"/></svg>
+          </div>
+        </div>
+        <div style={{ padding: "8px 20px 12px", borderBottom: "1px solid #2c2d35" }}>
+          <div style={{ fontSize: "16px", fontWeight: 700, color: "#e8eaee", letterSpacing: "-0.02em" }}>Navigation</div>
         </div>
         {[
-          { label: "Dashboard", active: phase === 2 },
+          { label: "Dashboard", active: true },
           { label: "Overview", active: false },
           { label: "Negative Cash Flow", active: false },
           { label: "Financials", active: false },
           { label: "Properties", active: false },
           { label: "Unit Tracker", active: false },
+          { label: "Unit Vacancy", active: false },
           { label: "Accounts", active: false },
         ].map(({ label, active }, i) => (
           <div key={label} style={{
-            padding: "11px 16px",
-            fontSize: "11px",
+            padding: "14px 20px",
+            fontSize: "13px",
             color: active ? "#93b4fd" : "#6b6e82",
             background: active ? "rgba(37,99,235,0.18)" : "transparent",
             fontWeight: active ? 600 : 400,
-            borderBottom: "1px solid #2c2d3520",
-            transition: `background 0.2s ${i * 0.04}s, color 0.2s`,
+            borderBottom: "1px solid rgba(44,45,53,0.6)",
+            transition: `opacity 0.15s ${i * 0.03}s`,
+            opacity: menuVisible ? 1 : 0,
           }}>
             {label}
           </div>
         ))}
       </div>
 
-      {/* Dashboard content */}
+      {/* ── Dashboard content (scrolls) ── */}
       <div style={{
-        opacity: menuVisible ? 0 : 1,
+        opacity: contentOpacity,
         transition: "opacity 0.3s",
         height: "100%", display: "flex", flexDirection: "column",
       }}>
         {/* Status bar */}
-        <div style={{
-          display: "flex", justifyContent: "space-between", alignItems: "center",
-          padding: "34px 18px 6px",
-        }}>
-          <div style={{ fontSize: "10px", fontWeight: 600, color: "#e8eaee", letterSpacing: "0.02em" }}>9:41</div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "42px 20px 6px", flexShrink: 0 }}>
+          <div style={{ fontSize: "11px", fontWeight: 600, color: "#e8eaee", letterSpacing: "0.02em" }}>9:41</div>
           <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-            <svg width="12" height="9" viewBox="0 0 12 9" fill="none">
-              <rect x="0" y="6" width="2" height="3" rx=".5" fill="#e8eaee" />
-              <rect x="3" y="4" width="2" height="5" rx=".5" fill="#e8eaee" />
-              <rect x="6" y="2" width="2" height="7" rx=".5" fill="#e8eaee" />
-              <rect x="9" y="0" width="2" height="9" rx=".5" fill="#e8eaee" opacity=".3" />
-            </svg>
-            <svg width="17" height="9" viewBox="0 0 17 9" fill="none">
-              <rect x=".5" y=".5" width="13" height="8" rx="2" stroke="#e8eaee" strokeOpacity=".35" />
-              <rect x="1.5" y="1.5" width="10" height="6" rx="1.2" fill="#22c55e" />
-              <path d="M14.5 3v3" stroke="#e8eaee" strokeOpacity=".4" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
+            <svg width="12" height="9" viewBox="0 0 12 9" fill="none"><rect x="0" y="6" width="2" height="3" rx=".5" fill="#e8eaee"/><rect x="3" y="4" width="2" height="5" rx=".5" fill="#e8eaee"/><rect x="6" y="2" width="2" height="7" rx=".5" fill="#e8eaee"/><rect x="9" y="0" width="2" height="9" rx=".5" fill="#e8eaee" opacity=".35"/></svg>
+            <svg width="17" height="9" viewBox="0 0 17 9" fill="none"><rect x=".5" y=".5" width="13" height="8" rx="2" stroke="#e8eaee" strokeOpacity=".35"/><rect x="1.5" y="1.5" width="10" height="6" rx="1.2" fill="#22c55e"/><path d="M14.5 3v3" stroke="#e8eaee" strokeOpacity=".4" strokeWidth="1.5" strokeLinecap="round"/></svg>
           </div>
         </div>
 
         {/* Header */}
         <div style={{
-          padding: "4px 14px 8px", borderBottom: "1px solid #2c2d35",
-          display: "flex", justifyContent: "space-between", alignItems: "center",
+          padding: "4px 18px 10px", borderBottom: "1px solid #2c2d35",
+          display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0,
         }}>
           <div>
-            <div style={{ fontSize: "14px", fontWeight: 700, color: "#e8eaee", letterSpacing: "-0.02em" }}>Dashboard</div>
-            <div style={{ fontSize: "8px", color: "#565869", marginTop: "1px" }}>March 2026 · 23 props</div>
+            <div style={{ fontSize: "16px", fontWeight: 700, color: "#e8eaee", letterSpacing: "-0.02em" }}>Dashboard</div>
+            <div style={{ fontSize: "9px", color: "#565869", marginTop: "2px" }}>March 2026 · 23 properties</div>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "2.5px", padding: "2px" }}>
-            {[0, 1, 2].map(i => <span key={i} style={{ display: "block", width: "15px", height: "1.5px", background: "#565869", borderRadius: "1px" }} />)}
+          {/* Hamburger with tap ripple */}
+          <div style={{ position: "relative", padding: "4px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+              {[0, 1, 2].map(i => <span key={i} style={{ display: "block", width: "18px", height: "1.5px", background: "#6b6e82", borderRadius: "1px" }} />)}
+            </div>
+            {/* Tap ripple */}
+            {tapVisible && (
+              <div style={{
+                position: "absolute", top: "50%", left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "36px", height: "36px", borderRadius: "50%",
+                background: "rgba(147, 180, 253, 0.25)",
+                animation: "tapRipple 0.6s ease-out forwards",
+              }} />
+            )}
           </div>
         </div>
 
-        {/* Scrollable content */}
-        <div style={{ flex: 1, overflow: "hidden", padding: "6px 10px", display: "flex", flexDirection: "column", gap: "6px" }}>
-          {/* Donut pair */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px" }}>
-            {[
-              { label: "Wtd Phys Occ", val: "97.5%", arc: "126.3" },
-              { label: "Phys Occ Dist.", val: "91.3%", arc: "120.4" },
-            ].map(({ label, val, arc }) => (
-              <div key={label} style={{ background: "#363840", borderRadius: "8px", padding: "8px 6px", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <div style={{ fontSize: "7px", color: "#565869", marginBottom: "6px", alignSelf: "flex-start", lineHeight: 1.3 }}>{label}</div>
-                <svg width="58" height="58" viewBox="0 0 58 58">
-                  <circle cx="29" cy="29" r="21" fill="none" stroke="#2a2c38" strokeWidth="6.5" />
-                  <circle cx="29" cy="29" r="21" fill="none" stroke="#22c55e" strokeWidth="6.5"
-                    strokeDasharray={`${arc} 131.9`} strokeLinecap="butt" transform="rotate(-90 29 29)" />
-                  <text x="29" y="32.5" textAnchor="middle" fill="#e8eaee" fontSize="9" fontWeight="700">{val}</text>
+        {/* Scrollable area */}
+        <div style={{ flex: 1, overflow: "hidden", position: "relative" }}>
+          <div ref={contentRef} style={{ padding: "8px 14px", display: "flex", flexDirection: "column", gap: "8px", willChange: "transform" }}>
+
+            {/* Occ gauges */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+              {[
+                { label: "Wtd Physical Occ", val: "97.5%", arc: "126.3", circ: "131.9" },
+                { label: "Phys Occ Distribution", val: "91.3%", arc: "120.4", circ: "131.9" },
+              ].map(({ label, val, arc, circ }) => (
+                <div key={label} style={{ background: "#363840", borderRadius: "10px", padding: "10px 8px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                  <div style={{ ...mcLabel, alignSelf: "flex-start" }}>{label}</div>
+                  <svg width="72" height="72" viewBox="0 0 72 72">
+                    <circle cx="36" cy="36" r="26" fill="none" stroke="#2a2c38" strokeWidth="7" />
+                    <circle cx="36" cy="36" r="26" fill="none" stroke="#22c55e" strokeWidth="7"
+                      strokeDasharray={`${arc} ${circ}`} strokeLinecap="butt" transform="rotate(-90 36 36)" />
+                    <text x="36" y="40" textAnchor="middle" fill="#e8eaee" fontSize="11" fontWeight="700">{val}</text>
+                  </svg>
+                </div>
+              ))}
+            </div>
+
+            {/* Econ occ gauges */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+              {[
+                { label: "Wtd Economic Occ", val: "98.5%", arc: "129.7", circ: "131.9" },
+                { label: "Eco Occ Distribution", val: "87.0%", arc: "114.7", circ: "131.9" },
+              ].map(({ label, val, arc, circ }) => (
+                <div key={label} style={{ background: "#363840", borderRadius: "10px", padding: "10px 8px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                  <div style={{ ...mcLabel, alignSelf: "flex-start" }}>{label}</div>
+                  <svg width="72" height="72" viewBox="0 0 72 72">
+                    <circle cx="36" cy="36" r="26" fill="none" stroke="#2a2c38" strokeWidth="7" />
+                    <circle cx="36" cy="36" r="26" fill="none" stroke="#22c55e" strokeWidth="7"
+                      strokeDasharray={`${arc} ${circ}`} strokeLinecap="butt" transform="rotate(-90 36 36)" />
+                    <text x="36" y="40" textAnchor="middle" fill="#e8eaee" fontSize="11" fontWeight="700">{val}</text>
+                  </svg>
+                </div>
+              ))}
+            </div>
+
+            {/* Property Metrics */}
+            <div style={secHdr}>Property Metrics</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+              <div style={mc()}><div style={mcLabel}>Neg Cash Flow</div><span style={mcVal()}>10</span></div>
+              <div style={mc()}><div style={mcLabel}>Negative NOI</div><span style={mcVal()}>2</span></div>
+              <div style={mc()}><div style={mcLabel}>UI Ratio &lt;75%</div><span style={mcVal()}>9</span></div>
+              <div style={mc()}><div style={mcLabel}>Expense Ratio &gt;50%</div><span style={mcVal()}>0</span></div>
+            </div>
+
+            {/* Financial Performance */}
+            <div style={secHdr}>Financial Performance</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+              <div style={{ background: "#363840", borderRadius: "10px", padding: "10px 12px 0", height: "78px", overflow: "hidden" }}>
+                <div style={mcLabel}>Net Op Income</div>
+                <div style={mcVal("#22c55e")}>$525K</div>
+                <svg width="100%" height="26" viewBox="0 0 120 26" preserveAspectRatio="none" style={{ display: "block" }}>
+                  <polyline points="0,20 30,16 60,17 85,10 105,13 120,8" fill="none" stroke="#22c55e" strokeWidth="1.6" />
                 </svg>
               </div>
-            ))}
-          </div>
-
-          {/* Metrics */}
-          <div style={{ fontSize: "10px", fontWeight: 600, color: "#c5c8d8", margin: "4px 0 2px", letterSpacing: "-0.01em" }}>Property Metrics</div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px" }}>
-            <div style={mcStyle}><div style={mcLabelStyle}>Neg Cash Flow</div><span style={mcValStyle()}>10</span></div>
-            <div style={mcStyle}><div style={mcLabelStyle}>Negative NOI</div><span style={mcValStyle()}>2</span></div>
-          </div>
-
-          {/* Financial */}
-          <div style={{ fontSize: "10px", fontWeight: 600, color: "#c5c8d8", margin: "4px 0 2px", letterSpacing: "-0.01em" }}>Financial Performance</div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px" }}>
-            <div style={{ background: "#363840", borderRadius: "8px", padding: "8px 10px 0", height: "64px", overflow: "hidden" }}>
-              <div style={{ fontSize: "7px", color: "#565869", marginBottom: "2px" }}>Net Op Income</div>
-              <div style={mcValStyle("#22c55e")}>$525,804</div>
-              <svg width="100%" height="24" viewBox="0 0 120 24" preserveAspectRatio="none" style={{ display: "block", marginTop: "auto" }}>
-                <polyline points="0,16 30,13 60,14 85,9 105,11 120,7" fill="none" stroke="#22c55e" strokeWidth="1.4" />
-              </svg>
+              <div style={{ background: "#363840", borderRadius: "10px", padding: "10px 12px 0", height: "78px", overflow: "hidden" }}>
+                <div style={mcLabel}>Eff Cash Flow</div>
+                <div style={mcVal("#ef4444")}>-$85K</div>
+                <svg width="100%" height="26" viewBox="0 0 120 26" preserveAspectRatio="none" style={{ display: "block" }}>
+                  <polyline points="0,8 20,14 38,7 56,20 75,10 90,18 105,8 120,20" fill="none" stroke="#ef4444" strokeWidth="1.6" />
+                </svg>
+              </div>
+              <div style={{ background: "#363840", borderRadius: "10px", padding: "10px 12px 0", height: "78px", overflow: "hidden" }}>
+                <div style={mcLabel}>Operating Income</div>
+                <div style={mcVal()}>$985K</div>
+                <svg width="100%" height="26" viewBox="0 0 120 26" preserveAspectRatio="none" style={{ display: "block" }}>
+                  <polyline points="0,20 20,18 40,19 60,14 80,16 100,12 120,10" fill="none" stroke="#0ea5e9" strokeWidth="1.6" />
+                </svg>
+              </div>
+              <div style={{ background: "#363840", borderRadius: "10px", padding: "10px 12px 0", height: "78px", overflow: "hidden" }}>
+                <div style={mcLabel}>Operating Expense</div>
+                <div style={mcVal()}>$459K</div>
+                <svg width="100%" height="26" viewBox="0 0 120 26" preserveAspectRatio="none" style={{ display: "block" }}>
+                  <polyline points="0,15 25,14 50,18 70,11 95,15 115,11 120,9" fill="none" stroke="#0ea5e9" strokeWidth="1.6" />
+                </svg>
+              </div>
             </div>
-            <div style={{ background: "#363840", borderRadius: "8px", padding: "8px 10px 0", height: "64px", overflow: "hidden" }}>
-              <div style={{ fontSize: "7px", color: "#565869", marginBottom: "2px" }}>Eff Cash Flow</div>
-              <div style={mcValStyle("#ef4444")}>-$85,033</div>
-              <svg width="100%" height="24" viewBox="0 0 120 24" preserveAspectRatio="none" style={{ display: "block", marginTop: "auto" }}>
-                <polyline points="0,7 20,12 38,6 56,17 75,9 90,15 105,7 120,18" fill="none" stroke="#ef4444" strokeWidth="1.4" />
-              </svg>
-            </div>
+
+            {/* Extra padding so scroll reveals content fully */}
+            <div style={{ height: "60px" }} />
           </div>
         </div>
 
         {/* Tab bar */}
         <div style={{
           display: "flex", justifyContent: "space-around", alignItems: "center",
-          padding: "5px 8px", height: "48px", borderTop: "1px solid #2c2d35",
+          padding: "6px 8px", height: "56px", borderTop: "1px solid #2c2d35",
           background: "#1c1d22", flexShrink: 0,
         }}>
           {[
-            { label: "Dashboard", active: true, icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" fill="#e8eaee" /><rect x="8" y="1" width="5" height="5" rx="1" fill="#e8eaee" /><rect x="1" y="8" width="5" height="5" rx="1" fill="#e8eaee" /><rect x="8" y="8" width="5" height="5" rx="1" fill="#e8eaee" /></svg> },
-            { label: "Reports", active: false, icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#e8eaee" strokeWidth="1.2" strokeLinecap="round"><rect x="1" y="1" width="12" height="12" rx="1.5" /><line x1="1" y1="5" x2="13" y2="5" /><line x1="5" y1="1" x2="5" y2="13" /></svg> },
-            { label: "Properties", active: false, icon: <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#e8eaee" strokeWidth="1.2" strokeLinecap="round"><rect x="2" y="2" width="4" height="10" rx="1" /><rect x="8" y="5" width="4" height="7" rx="1" /></svg> },
+            { label: "Dashboard", active: true, icon: <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="1" y="1" width="6.5" height="6.5" rx="1.2" fill="#e8eaee"/><rect x="10.5" y="1" width="6.5" height="6.5" rx="1.2" fill="#e8eaee"/><rect x="1" y="10.5" width="6.5" height="6.5" rx="1.2" fill="#e8eaee"/><rect x="10.5" y="10.5" width="6.5" height="6.5" rx="1.2" fill="#e8eaee"/></svg> },
+            { label: "Reports", active: false, icon: <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#e8eaee" strokeWidth="1.3" strokeLinecap="round"><rect x="1.5" y="1.5" width="15" height="15" rx="2"/><line x1="1.5" y1="6.5" x2="16.5" y2="6.5"/><line x1="6.5" y1="1.5" x2="6.5" y2="16.5"/></svg> },
+            { label: "Properties", active: false, icon: <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#e8eaee" strokeWidth="1.3" strokeLinecap="round"><rect x="2" y="3" width="5" height="12" rx="1.2"/><rect x="9.5" y="7" width="5" height="8" rx="1.2"/></svg> },
           ].map(({ label, active, icon }) => (
-            <div key={label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2px", flex: 1, opacity: active ? 1 : 0.4 }}>
+            <div key={label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "3px", flex: 1, opacity: active ? 1 : 0.4 }}>
               {icon}
-              <span style={{ fontSize: "7px", color: "#e8eaee", letterSpacing: "0.01em" }}>{label}</span>
+              <span style={{ fontSize: "9px", color: "#e8eaee", letterSpacing: "0.01em" }}>{label}</span>
             </div>
           ))}
         </div>
 
-        {/* Home bar */}
-        <div style={{ position: "absolute", bottom: "8px", left: "50%", transform: "translateX(-50%)", width: "70px", height: "3px", borderRadius: "4px", background: "rgba(255,255,255,0.3)" }} />
+        {/* Home indicator */}
+        <div style={{ position: "absolute", bottom: "10px", left: "50%", transform: "translateX(-50%)", width: "90px", height: "4px", borderRadius: "4px", background: "rgba(255,255,255,0.28)" }} />
       </div>
+
+      <style>{`
+        @keyframes tapRipple {
+          0%   { opacity: 1; transform: translate(-50%,-50%) scale(0.4); }
+          100% { opacity: 0; transform: translate(-50%,-50%) scale(1.6); }
+        }
+      `}</style>
     </div>
   );
 };
@@ -548,7 +650,7 @@ const HeroDashboardMockup = () => {
   return (
     <div
       className="w-full flex items-end justify-center mt-16 mb-0 px-4 relative"
-      style={{ minHeight: "640px" }}
+      style={{ minHeight: "700px" }}
     >
       {/* ── MacBook Pro ── */}
       <motion.div
@@ -615,8 +717,8 @@ const HeroDashboardMockup = () => {
         }}
         style={{
           position: "absolute",
-          bottom: "-30px",
-          right: "calc(50% - 490px)",
+          bottom: "-60px",
+          right: "calc(50% - 560px)",
           zIndex: 20,
           rotateX,
           rotateY,
@@ -625,23 +727,28 @@ const HeroDashboardMockup = () => {
         }}
         className="hidden lg:block"
       >
-        {/* iPhone 16 Pro outer body */}
+        {/* iPhone 16 Pro outer body — exact spec: 292×610, 50px radius */}
         <div style={{
-          width: "182px",
-          height: "380px",
+          width: "292px",
+          height: "610px",
           background: "#f2f2f7",
           borderRadius: "50px",
           border: "3px solid #d1d1d6",
-          boxShadow: "0 20px 40px rgba(0,0,0,0.25)",
+          boxShadow: "0 20px 40px rgba(0,0,0,0.18)",
           padding: "4px",
           position: "relative",
         }}>
-          {/* Hardware buttons */}
+          {/* Hardware buttons — exact spec positions */}
+          {/* Action button */}
           <div style={{ background: "#d1d1d6", position: "absolute", borderRadius: "2px", width: "3px", height: "20px", left: "-6px", top: "110px" }} />
+          {/* Vol up */}
           <div style={{ background: "#d1d1d6", position: "absolute", borderRadius: "2px", width: "3px", height: "45px", left: "-6px", top: "150px" }} />
+          {/* Vol down */}
           <div style={{ background: "#d1d1d6", position: "absolute", borderRadius: "2px", width: "3px", height: "45px", left: "-6px", top: "205px" }} />
+          {/* Power */}
           <div style={{ background: "#d1d1d6", position: "absolute", borderRadius: "2px", width: "3px", height: "60px", right: "-6px", top: "165px" }} />
-          <div style={{ background: "#d1d1d6", position: "absolute", borderRadius: "4px", width: "3px", height: "40px", right: "-6px", top: "250px" }} />
+          {/* Camera control */}
+          <div style={{ background: "#d1d1d6", position: "absolute", borderRadius: "4px", width: "3px", height: "40px", right: "-6px", top: "350px" }} />
 
           {/* Screen */}
           <div style={{
