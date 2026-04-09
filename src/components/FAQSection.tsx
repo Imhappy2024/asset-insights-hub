@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const faqs = [
   {
     q: "What PM software does FolioExcel integrate with?",
-    a: "FolioExcel is currently integrated with AppFolio. Because we're built on open API architecture, we can connect with virtually any property management platform — but each integration requires development work specific to that system. If you're on Yardi, Buildium, or another platform, reach out and we'll assess the integration together.",
+    a: "We can virtually connect with any property management platform that has an open API — though some integrations require development work specific to that system. Reach out and we'll assess it together.",
   },
   {
     q: "What reports and KPIs are available?",
