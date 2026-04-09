@@ -248,9 +248,11 @@ const HeroDashboardMockup = () => {
                 app.folioexcel.com/dashboard
               </div>
             </div>
-            {/* Dashboard */}
-            <div className="relative" style={{ height: "calc(100% - 22px)" }}>
-              <LaptopDashboard hoveredCard={hoveredCard} />
+            {/* Dashboard — scaled up to fill screen, clipped by overflow-hidden parent */}
+            <div className="relative overflow-hidden" style={{ height: "calc(100% - 22px)" }}>
+              <div style={{ transform: "scale(1.22)", transformOrigin: "top center", height: "100%", width: "100%" }}>
+                <LaptopDashboard hoveredCard={hoveredCard} />
+              </div>
               <MouseCursor x={cursor.x} y={cursor.y} />
             </div>
           </div>
