@@ -154,8 +154,8 @@ const CaptureForm = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="bg-foreground/[0.04] border border-primary/20 rounded-2xl p-10 text-center"
           >
-            <div className="w-[72px] h-[72px] rounded-full bg-gradient-to-br from-primary/20 to-accent/15 border-2 border-primary/30 flex items-center justify-center mx-auto mb-5 text-3xl shadow-[0_8px_32px_hsl(162_100%_39%/0.2)]">
-              ✓
+             <div className="w-[72px] h-[72px] rounded-full bg-primary/20 border-2 border-primary/40 flex items-center justify-center mx-auto mb-5 text-3xl text-primary shadow-[0_8px_32px_hsl(162_100%_39%/0.2)]">
+               ✓
             </div>
             <h3 className="font-display text-[22px] font-bold text-foreground mb-3">You're on the list!</h3>
             <p className="text-sm text-fe-muted-dark max-w-[400px] mx-auto leading-relaxed">
