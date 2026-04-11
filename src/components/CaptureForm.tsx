@@ -15,11 +15,20 @@ const CaptureForm = () => {
   });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, source: "capture_form" }),
+      });
+    } catch (err) {
+      console.error("Webhook error:", err);
+    }
     setSubmitted(true);
-    window.open(CALENDLY_URL, "_blank");
+    toast.success("Early Access Request Sent!", { description: "We will contact you soon!" });
   };
 
   return (
