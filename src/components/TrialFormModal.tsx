@@ -194,17 +194,16 @@ const TrialFormModal = ({ open, onClose }: TrialFormModalProps) => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-6"
+                className="text-center py-6 bg-[#00c78b] rounded-2xl p-10"
               >
-                <div className="w-[72px] h-[72px] rounded-full bg-primary/20 border-2 border-primary/40 flex items-center justify-center mx-auto mb-5 text-3xl text-primary shadow-[0_8px_32px_hsl(162_100%_39%/0.2)]">
+                <div className="w-[72px] h-[72px] rounded-full bg-white/20 border-2 border-white/40 flex items-center justify-center mx-auto mb-5 text-3xl text-white">
                   ✓
                 </div>
-                <h3 className="font-display text-[22px] font-bold text-foreground mb-3">
-                  You're on the list!
+                <h3 className="font-display text-[22px] font-bold text-white mb-3">
+                  Early Access Request Sent!
                 </h3>
-                <p className="text-sm text-fe-muted-dark max-w-[400px] mx-auto leading-relaxed">
-                  Thanks, {formData.name}! We've opened our scheduling page in a new tab — book a
-                  quick call and we'll get you set up.
+                <p className="text-sm text-white/80 max-w-[400px] mx-auto leading-relaxed">
+                  Thanks, {formData.name}! We will contact you soon!
                 </p>
               </motion.div>
             )}
