@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 
-const CALENDLY_URL = "YOUR_CALENDLY_LINK_HERE";
+const WEBHOOK_URL = "https://leavenwealth.app.n8n.cloud/webhook/3470630d-9810-4e70-b1fd-bd32f9d29ef1";
 
 interface TrialFormModalProps {
   open: boolean;
@@ -19,11 +20,20 @@ const TrialFormModal = ({ open, onClose }: TrialFormModalProps) => {
   });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return;
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, source: "trial_modal" }),
+      });
+    } catch (err) {
+      console.error("Webhook error:", err);
+    }
     setSubmitted(true);
-    window.open(CALENDLY_URL, "_blank");
+    toast.success("Early Access Request Sent!", { description: "We will contact you soon!" });
   };
 
   const handleClose = () => {
