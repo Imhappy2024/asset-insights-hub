@@ -1,10 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- White circle -->
-  <circle cx="16" cy="16" r="15.5" fill="white"/>
-  <!-- Top horizontal bar (black) -->
-  <rect x="8.5" y="7" width="15" height="4" fill="#111827" rx="0.5"/>
-  <!-- Middle horizontal bar (black) -->
-  <rect x="8.5" y="14.5" width="11" height="3.5" fill="#111827" rx="0.5"/>
-  <!-- Vertical stem (green — drawn on top to show through junctions) -->
-  <rect x="8.5" y="7" width="4" height="18" fill="#00c896" rx="0.5"/>
+  <!-- Black F shape -->
+  <!-- Top horizontal bar -->
+  <rect x="6" y="5" width="20" height="5" fill="#111827" rx="0.5"/>
+  <!-- Middle horizontal bar -->
+  <rect x="6" y="14" width="14" height="4.5" fill="#111827" rx="0.5"/>
+  <!-- Left vertical stem (black) -->
+  <rect x="6" y="5" width="5" height="22" fill="#111827" rx="0.5"/>
+  <!-- Bottom green accent on the vertical stem (makes it look like an E with green bottom) -->
+  <rect x="6" y="22" width="5" height="5" fill="#05c900" rx="0.5"/>
 </svg>
