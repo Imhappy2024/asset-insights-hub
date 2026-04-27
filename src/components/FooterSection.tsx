@@ -3,7 +3,7 @@ const FooterSection = () => (
     <div className="max-w-[1100px] mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-14">
         <div>
-          <img src="/folioexcel-logo.svg" alt="FolioExcel" className="h-8 w-auto invert mb-3" />
+          <img src="/folioexcel-logo-dark.svg" alt="FolioExcel" className="h-8 w-auto mb-3" />
           <p className="text-[13px] text-fe-muted-dark leading-relaxed max-w-[240px]">
             The asset management dashboard built for multifamily operators who live in Excel.
           </p>

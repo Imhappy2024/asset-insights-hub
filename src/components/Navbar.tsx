@@ -9,7 +9,7 @@ const Navbar = () => {
     <>
       <nav className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-6 md:px-[52px] h-[66px] bg-background/90 backdrop-blur-xl border-b border-border">
         <a href="#" className="flex items-center" aria-label="FolioExcel home">
-          <img src="/folioexcel-logo.svg" alt="FolioExcel" className="h-7 md:h-8 w-auto invert" />
+          <img src="/folioexcel-logo-dark.svg" alt="FolioExcel" className="h-7 md:h-8 w-auto" />
         </a>
         <ul className="hidden md:flex gap-8 list-none">
           {["Features", "Reports", "How It Works", "FAQ"].map((item) => (
