@@ -1,10 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Left vertical stem (black) -->
-  <rect x="6" y="5" width="5" height="22" fill="#0a0a0a"/>
-  <!-- Top horizontal bar (black) -->
-  <rect x="6" y="5" width="20" height="5" fill="#0a0a0a"/>
-  <!-- Middle horizontal bar (black) -->
-  <rect x="6" y="13.5" width="15" height="5" fill="#0a0a0a"/>
+  <!-- Background rounded square -->
+  <rect width="32" height="32" rx="6" fill="#0a1520"/>
+  <!-- Left vertical stem (white) -->
+  <rect x="9" y="7" width="4.5" height="18" fill="#ffffff"/>
+  <!-- Top horizontal bar (white) -->
+  <rect x="9" y="7" width="14" height="4.5" fill="#ffffff"/>
+  <!-- Middle horizontal bar (white, shorter) -->
+  <rect x="9" y="13.75" width="10" height="4.5" fill="#ffffff"/>
   <!-- Bottom horizontal bar (green) -->
-  <rect x="6" y="22" width="20" height="5" fill="#05c900"/>
+  <rect x="9" y="20.5" width="14" height="4.5" fill="#05c900"/>
 </svg>
