@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Black F shape -->
+  <!-- Black rounded square background -->
+  <rect width="32" height="32" rx="5" fill="#0a0a0a"/>
+  <!-- Green F -->
+  <!-- Left vertical stem -->
+  <rect x="8" y="6" width="5" height="20" fill="#05c900" rx="0.5"/>
   <!-- Top horizontal bar -->
-  <rect x="6" y="5" width="20" height="5" fill="#111827" rx="0.5"/>
+  <rect x="8" y="6" width="17" height="5" fill="#05c900" rx="0.5"/>
   <!-- Middle horizontal bar -->
-  <rect x="6" y="14" width="14" height="4.5" fill="#111827" rx="0.5"/>
-  <!-- Left vertical stem (black) -->
-  <rect x="6" y="5" width="5" height="22" fill="#111827" rx="0.5"/>
-  <!-- Bottom green accent on the vertical stem (makes it look like an E with green bottom) -->
-  <rect x="6" y="22" width="5" height="5" fill="#05c900" rx="0.5"/>
+  <rect x="8" y="14" width="12" height="4.5" fill="#05c900" rx="0.5"/>
 </svg>
