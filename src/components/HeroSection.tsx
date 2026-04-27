@@ -16,17 +16,7 @@ const HeroSection = () => {
       }} />
 
       <div className="relative z-10">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 border border-primary/30 rounded-full text-[11.5px] font-bold text-primary bg-primary/[0.07] mb-8 tracking-widest uppercase backdrop-blur-sm"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-primary" style={{ animation: "pulse-dot 2s infinite" }} />
-          <span className="bg-primary text-primary-foreground text-[9px] font-extrabold px-2 py-0.5 rounded-full tracking-wider">BETA</span>
-          Now Onboarding
-        </motion.div>
+        {/* Badge removed */}
 
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
